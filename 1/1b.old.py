@@ -10,19 +10,6 @@ def main():
     for line in sys.stdin:
         line.strip()
 
-        #print(line)
-        #this didn't work because of the "eightwo123" type case... I need 8, but it swapped 2 first
-        #line = line.replace("zero","0")
-        #line = line.replace("one","1")
-        #line = line.replace("two","2")
-        #line = line.replace("three","3")
-        #line = line.replace("four","4")
-        #line = line.replace("five","5")
-        #line = line.replace("six","6")
-        #line = line.replace("seven","7")
-        #line = line.replace("eight","8")
-        #line = line.replace("nine","9")
-
         print(line)
 
         word = ''
@@ -76,8 +63,10 @@ def main():
                 break
 
         print(line)
+        og_line = line
+        word = ''
 
-        for char in reversed(line):
+        for char in reversed(og_line):
             if char.isdigit():
                 right = int(char)
                 break
@@ -128,6 +117,7 @@ def main():
                 break
 
         print(line)
+        print("left: ",left," right: ",right)
         #print("left=" + str(left) + " right=" + str(right) + "\n")
         total += int(str(left) + str(right))
 

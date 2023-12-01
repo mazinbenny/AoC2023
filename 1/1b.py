@@ -1,5 +1,4 @@
 #!/usr/local/bin/python3
-#test
 
 import sys
 
@@ -9,15 +8,20 @@ def main():
     total = 0
 
     for line in sys.stdin:
-        #print(line.strip())
+        print(line.strip())
 
         word = ''
         og_line = line
         for char in og_line:
             if char.isdigit():
+                #don't need to look for number-word, have a digit
                 break
-            word += char
+            else:
+                word += char
             #originally tried == but exact match doesn't work for leading chars
+            #
+            #I wonder if the order or breaks are doing something bad?
+            #does the length of the number-word matter? shorter words first?
             if word.find("one") != -1:
                 line = line.replace("one","1")
                 break
@@ -53,8 +57,9 @@ def main():
         for char in reversed(og_line):
             if char.isdigit():
                 break
-            #prepend / build the word backwards because of the reverse loop
-            word = char + word
+            else:
+                #prepend / build the word backwards because of the reverse loop
+                word = char + word
             #print("Word: " + word)
             if word.find("one") != -1:
                 line = str("1").join(line.rsplit("one",1))
@@ -95,8 +100,8 @@ def main():
                 right = int(char)
                 break
 
-        print("left: ",left," right: ",right)
         total += int(str(left) + str(right))
+        print("left: ",left," right: ",right," num: ",int(str(left) + str(right))," total: ",total,"\n")
 
     print("Total:")
     print(total)

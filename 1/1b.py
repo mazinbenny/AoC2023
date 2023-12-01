@@ -4,7 +4,7 @@ import sys
 
 def main():
 
-    progName = "Day1"
+    progName = "Day1b"
     total = 0
 
     for line in sys.stdin:
@@ -23,8 +23,8 @@ def main():
             elif word.find("two") != -1:
                 line = line.replace("two","2")
                 break
-            elif word.find("three") != -1:
-                line = line.replace("three","3")
+            elif word.find("six") != -1:
+                line = line.replace("six","6")
                 break
             elif word.find("four") != -1:
                 line = line.replace("four","4")
@@ -32,17 +32,17 @@ def main():
             elif word.find("five") != -1:
                 line = line.replace("five","5")
                 break
-            elif word.find("six") != -1:
-                line = line.replace("six","6")
+            elif word.find("nine") != -1:
+                line = line.replace("nine","9")
+                break
+            elif word.find("three") != -1:
+                line = line.replace("three","3")
                 break
             elif word.find("seven") != -1:
                 line = line.replace("seven","7")
                 break
             elif word.find("eight") != -1:
                 line = line.replace("eight","8")
-                break
-            elif word.find("nine") != -1:
-                line = line.replace("nine","9")
                 break
 
         #print(line)
@@ -61,8 +61,8 @@ def main():
             elif word.find("two") != -1:
                 line = str("2").join(line.rsplit("two",1))
                 break
-            elif word.find("three") != -1:
-                line = str("3").join(line.rsplit("three",1))
+            elif word.find("six") != -1:
+                line = str("6").join(line.rsplit("six",1))
                 break
             elif word.find("four") != -1:
                 line = str("4").join(line.rsplit("four",1))
@@ -70,17 +70,17 @@ def main():
             elif word.find("five") != -1:
                 line = str("5").join(line.rsplit("five",1))
                 break
-            elif word.find("six") != -1:
-                line = str("6").join(line.rsplit("six",1))
+            elif word.find("nine") != -1:
+                line = str("9").join(line.rsplit("nine",1))
+                break
+            elif word.find("three") != -1:
+                line = str("3").join(line.rsplit("three",1))
                 break
             elif word.find("seven") != -1:
                 line = str("7").join(line.rsplit("seven",1))
                 break
             elif word.find("eight") != -1:
                 line = str("8").join(line.rsplit("eight",1))
-                break
-            elif word.find("nine") != -1:
-                line = str("9").join(line.rsplit("nine",1))
                 break
 
         #print(line.strip())

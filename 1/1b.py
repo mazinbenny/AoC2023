@@ -8,58 +8,41 @@ def main():
     total = 0
 
     for line in sys.stdin:
-        line.strip()
-
-        print(line)
+        #print(line.strip())
 
         word = ''
         og_line = line
         for char in og_line:
             if char.isdigit():
-                left = int(char)
                 break
-            else:
-                word += char
+            word += char
             #originally tried == but exact match doesn't work for leading chars
             if word.find("one") != -1:
-                left = 1
                 line = line.replace("one","1")
                 break
             elif word.find("two") != -1:
-                left = 2
                 line = line.replace("two","2")
                 break
             elif word.find("three") != -1:
-                left = 3
                 line = line.replace("three","3")
                 break
             elif word.find("four") != -1:
-                left = 4
                 line = line.replace("four","4")
                 break
             elif word.find("five") != -1:
-                left = 5
                 line = line.replace("five","5")
                 break
             elif word.find("six") != -1:
-                left = 6
                 line = line.replace("six","6")
                 break
             elif word.find("seven") != -1:
-                left = 7
                 line = line.replace("seven","7")
                 break
             elif word.find("eight") != -1:
-                left = 8
                 line = line.replace("eight","8")
                 break
             elif word.find("nine") != -1:
-                left = 9
                 line = line.replace("nine","9")
-                break
-            elif word.find("zero") != -1:
-                left = 0
-                line = line.replace("zero","0")
                 break
 
         #print(line)
@@ -68,55 +51,49 @@ def main():
 
         for char in reversed(og_line):
             if char.isdigit():
-                right = int(char)
                 break
-            else:
-                #prepend / build the word backwards because of the reverse loop
-                word = char + word
+            #prepend / build the word backwards because of the reverse loop
+            word = char + word
             #print("Word: " + word)
             if word.find("one") != -1:
-                right = 1
-                line = str(right).join(line.rsplit("one",1))
+                line = str("1").join(line.rsplit("one",1))
                 break
             elif word.find("two") != -1:
-                right = 2
-                line = str(right).join(line.rsplit("two",1))
+                line = str("2").join(line.rsplit("two",1))
                 break
             elif word.find("three") != -1:
-                right = 3
-                line = str(right).join(line.rsplit("three",1))
+                line = str("3").join(line.rsplit("three",1))
                 break
             elif word.find("four") != -1:
-                right = 4
-                line = str(right).join(line.rsplit("four",1))
+                line = str("4").join(line.rsplit("four",1))
                 break
             elif word.find("five") != -1:
-                right = 5
-                line = str(right).join(line.rsplit("five",1))
+                line = str("5").join(line.rsplit("five",1))
                 break
             elif word.find("six") != -1:
-                right = 6
-                line = str(right).join(line.rsplit("six",1))
-                #print("new: " + line)
+                line = str("6").join(line.rsplit("six",1))
                 break
             elif word.find("seven") != -1:
-                right = 7
-                line = str(right).join(line.rsplit("seven",1))
+                line = str("7").join(line.rsplit("seven",1))
                 break
             elif word.find("eight") != -1:
-                right = 8
-                line = str(right).join(line.rsplit("eight",1))
+                line = str("8").join(line.rsplit("eight",1))
                 break
             elif word.find("nine") != -1:
-                right = 9
-                line = str(right).join(line.rsplit("nine",1))
-                break
-            elif word.find("zero") != -1:
-                right = 0
-                line = str(right).join(line.rsplit("zero",1))
+                line = str("9").join(line.rsplit("nine",1))
                 break
 
-        #print(line)
+        #print(line.strip())
+
+        for char in line:
+            if char.isdigit():
+                left = int(char)
+                break
+        for char in reversed(line):
+            if char.isdigit():
+                right = int(char)
+                break
+
         print("left: ",left," right: ",right)
         total += int(str(left) + str(right))
 

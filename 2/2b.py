@@ -36,7 +36,7 @@ def main():
         #after inner loop
         #collect max for each color to mult to power
         power = maxblue * maxred * maxgreen
-        print("mb: ",maxblue," mr: ",maxred," mg: ",maxgreen," pwr: ",power)
+        #print("mb: ",maxblue," mr: ",maxred," mg: ",maxgreen," pwr: ",power)
 
         valid_total += power
 

@@ -5,7 +5,7 @@ import re
 
 def main():
 
-    progName = "Day2"
+    progName = "Day2b"
 
     valid_total = 0
 

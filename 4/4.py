@@ -13,7 +13,7 @@ def main():
         data.append(line.strip())
 
     for linenum in range(len(data)):
-        nolabel = re.sub(r'Card \d+: ','',data[linenum])
+        nolabel = re.sub(r'Card\s+\d+: ','',data[linenum])
         nums = nolabel.split('|')
         win = set(re.findall(r'\d+',nums[0]))
         mine = set(re.findall(r'\d+',nums[1]))

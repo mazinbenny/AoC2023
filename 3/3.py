@@ -87,9 +87,9 @@ def main():
                 #first time, no offset needed
                 index = data[linenum].find(num)
                 flag = False
-                oldnum = num
             else:
                 index = data[linenum].find(num,index + len(oldnum))
+            oldnum = num
 
             #if a symbol adjacent somewhere, add to total
             if check_adj(data,linenum,num,index):

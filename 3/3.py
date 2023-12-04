@@ -3,8 +3,7 @@
 import sys
 import re
 
-def check_adj(data,linenum,num):
-    index = data[linenum].find(num)
+def check_adj(data,linenum,num,index):
     adjcells = ''
     #check all 8 directions around the num
     #watch boundaries of array
@@ -14,8 +13,8 @@ def check_adj(data,linenum,num):
     #print("num: ",num," i: ",index," l(n): ",len(num)," ln: ",linenum," ei#: ",data[linenum][ei])
     if (index>0) and (ei+1<len(data[linenum])) and (linenum>0) and (linenum+1<len(data)):
         #bulk of board, check all 8 directions / not on edge
-        adjcells = data[linenum-1][index-1:ei+2] + " " + data[linenum+1][index-1:ei+2] + " " + data[linenum][index-1] + data[linenum][ei+1]
-        #print("main board")
+        adjcells = data[linenum-1][index-1:ei+2] + " " + data[linenum+1][index-1:ei+2] + " " + data[linenum][index-1] + " " + data[linenum][ei+1]
+        #print(data[linenum-1][index-1:ei+2])
     elif linenum == 0:
         #top row, check below/sides
         #print("linenum=0")
@@ -24,7 +23,7 @@ def check_adj(data,linenum,num):
             adjcells = data[linenum+1][index:ei+2] + " " + data[linenum][ei+1]
             #print("top/0")
         elif ei == len(data[linenum]):
-            adjcells = data[linenum][index-1] + " " + data[linenum+1][index-1:ei]
+            adjcells = data[linenum+1][index-1:ei] + " " + data[linenum][index-1]
             #print("top/end")
         else:
             #print("top/mid")
@@ -37,22 +36,24 @@ def check_adj(data,linenum,num):
         elif ei == len(data[linenum]):
             adjcells = data[linenum-1][index:ei] + " " + data[linenum][index-1]
         else:
-            adjcells = data[linenum-1][index-1:ei+2] + data[linenum][index-1] + " " + data[linenum][ei+1]
+            adjcells = data[linenum-1][index-1:ei+2] + " " + data[linenum][index-1] + " " + data[linenum][ei+1]
     elif ei+1 == len(data[linenum]):
         #right edge, check above/below/left side
         #print("index=len(data[linenum])")
         #print("here")
-        adjcells = data[linenum-1][index-1:ei] + " " + data[linenum][index-1] + " " + data[linenum+1][index-1:ei]
+        adjcells = data[linenum-1][index-1:ei] + " " + data[linenum+1][index-1:ei] + " " + data[linenum][index-1]
     elif index == 0:
         #left edge, check above/below/right side
         #print("index=0")
-        adjcells = data[linenum-1][index:ei+2] + " " + data[linenum][ei+1] + " " + data[linenum+1][index:ei+1]
+        adjcells = data[linenum-1][index:ei+2] + " " + data[linenum+1][index:ei+1] + " " + data[linenum][ei+1]
     else:
         print("something wrong")
 
-    #print("adjcells: ",adjcells)
     #print("re.findall result: ",re.findall(r'[^.0-9\s]',adjcells))
-    return bool(re.search(r'[^.0-9\s]',adjcells))
+    #return bool(re.search(r'[^\.0-9\s]',adjcells))
+    valid = bool(re.search(r'[^\.\d\s]',adjcells))
+    #print("adjcells: ",adjcells,"valid: ",valid," ln:",linenum," num:",data[linenum][index:ei+1])
+    return valid
 
 def main():
 
@@ -71,6 +72,7 @@ def main():
         numlist = re.findall(r'\d+',data[linenum])
         #print("line: ",data[linenum])
         #subloop through each number on the line
+        flag = True
         for num in numlist:
             #then check around that number
             #what about two numbers adjacent but otherwise surrounded by "." ?
@@ -81,7 +83,12 @@ def main():
             # ......
 
             #if a symbol adjacent somewhere, add to total
-            if check_adj(data,linenum,num):
+            if flag:
+                index = data[linenum].find(num)
+                flag = False
+            else:
+                index = data[linenum].find(num,index + len(num) - 1)
+            if check_adj(data,linenum,num,index):
                 total += int(num)
             #    print("good num: ",num)
             #else:

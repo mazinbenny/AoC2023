@@ -25,7 +25,6 @@ def main():
                 for loop in range(linenum + 1,linenum + 1 + len(mine.intersection(win))):
                     cardcnt[loop] += 1
 
-    print(cardcnt)
     for linenum in range(len(data)):
         total += cardcnt[linenum]
 

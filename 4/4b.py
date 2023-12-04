@@ -21,9 +21,9 @@ def main():
         if len(mine.intersection(win)) > 0:
             #total += 2**(len(mine.intersection(win)) - 1)
             #make array of game number and the number of copies
-            for loop in range(linenum + 1,linenum + 1 + len(mine.intersection(win))):
-                print(loop)
-                cardcnt[loop] *= 2
+            for oloop in range(cardcnt[linenum]):
+                for loop in range(linenum + 1,linenum + 1 + len(mine.intersection(win))):
+                    cardcnt[loop] += 1
 
     print(cardcnt)
     for linenum in range(len(data)):

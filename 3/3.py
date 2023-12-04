@@ -10,44 +10,48 @@ def check_adj(data,linenum,num):
     #watch boundaries of array
     #linenum must be > 0 and < len(data)
     #data[linenum][index] > 0 and < len(data[linenum])
-    print("num: ",num," i: ",index," l(n): ",len(num)," ln: ",linenum," l(ln): ",len(data[linenum]))
-    if (index>0) and (index+len(num)+1 <= len(data[linenum])) and (linenum>0) and (linenum+1 <= len(data)):
+    ei = index+len(num)-1
+    print("num: ",num," i: ",index," l(n): ",len(num)," ln: ",linenum," ei#: ",data[linenum][ei])
+    if (index>0) and (ei+1 <= len(data[linenum])) and (linenum>0) and (linenum+1 < len(data)):
         #bulk of board, check all 8 directions / not on edge
-        #if re.search(r'^[.\d\l]',data[linenum][index-1:index+len(num)+1]):
-        adjcells = data[linenum-1][index-1:index+len(num)+1] + data[linenum+1][index-1:index+len(num)+1] + data[linenum][index-1] + data[linenum][index+len(num)+1]
+        adjcells = data[linenum-1][index-1:ei+2] + " " + data[linenum+1][index-1:ei+2] + " " + data[linenum][index-1] + data[linenum][ei+1]
         print("main board")
     elif linenum == 0:
         #top row, check below/sides
         print("linenum=0")
         if index == 0:
-            adjcells = data[linenum+1][index:index+len(num)+1] + data[linenum][index+len(num)+1]
-        elif index+len(num) == len(data[linenum]):
-            adjcells = data[linenum][index-1] + data[linenum+1][index-1:index+len(num)]
+            print("ei+1: ",ei+1,data[linenum+1][ei+1]," wtf: ",index,ei+1)
+            adjcells = data[linenum+1][index:ei+2] + " " + data[linenum][ei+1]
+            print("top/0")
+        elif ei == len(data[linenum]):
+            adjcells = data[linenum][index-1] + " " + data[linenum+1][index-1:ei]
+            print("top/end")
         else:
-            adjcells = data[linenum][index-1] + data[linenum+1][index-1:index+len(num)+1] + data[linenum][index+len(num)+1]
-    elif linenum == len(data):
+            print("top/mid")
+            adjcells = data[linenum][index-1] + " " + data[linenum+1][index-1:ei+2] + " " + data[linenum][ei+1]
+    elif linenum == (len(data)-1):
         #bottom row, check above/sides
         print("linenum=len(data)")
         if index == 0:
-            adjcells = data[linenum-1][index:index+len(num)+1] + data[linenum][index+len(num)+1]
-        elif index+len(num) == len(data[linenum]):
-            adjcells = data[linenum-1][index:index+len(num)] + data[linenum][index-1]
+            adjcells = data[linenum-1][index:ei+2] + " " + data[linenum][ei+1]
+        elif ei == len(data[linenum]):
+            adjcells = data[linenum-1][index:ei] + " " + data[linenum][index-1]
         else:
-            adjcells = data[linenum-1][index-1:index+len(num)+1] + data[linenum][index-1] + data[linenum][index+len(num)+1]
-    elif index+len(num) == len(data[linenum]):
+            adjcells = data[linenum-1][index-1:ei+2] + data[linenum][index-1] + " " + data[linenum][ei+1]
+    elif ei == len(data[linenum]):
         #right edge, check above/below/left side
         print("index=len(data[linenum])")
-        adjcells = data[linenum-1][index-1:index+len(num)] + data[linenum][index-1] + data[linenum+1][index-1:index+len(num)]
+        adjcells = data[linenum-1][index-1:ei] + " " + data[linenum][index-1] + " " + data[linenum+1][index-1:ei]
     elif index == 0:
         #left edge, check above/below/right side
         print("index=0")
-        adjcells = data[linenum-1][index:index+len(num)+1] + data[linenum][index+len(num)+1] + data[linenum+1][index:index+len(num)+1]
+        adjcells = data[linenum-1][index:ei+2] + " " + data[linenum][ei+1] + " " + data[linenum+1][index:ei+1]
     else:
         print("something wrong")
 
     print("adjcells: ",adjcells)
-    print("re.findall result: ",re.findall(r'[^.0-9]',adjcells))
-    return bool(re.search(r'[^.0-9]',adjcells))
+    print("re.findall result: ",re.findall(r'[^.0-9\s]',adjcells))
+    return bool(re.search(r'[^.0-9\s]',adjcells))
 
 def main():
 

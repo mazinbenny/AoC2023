@@ -22,7 +22,7 @@ def check_adj(data,linenum,num,index):
             #print("ei+1: ",ei+1,data[linenum+1][ei+1]," wtf: ",index,ei+1)
             adjcells = data[linenum+1][index:ei+2] + " " + data[linenum][ei+1]
             #print("top/0")
-        elif ei == len(data[linenum]):
+        elif ei == len(data[linenum]) - 1:
             adjcells = data[linenum+1][index-1:ei] + " " + data[linenum][index-1]
             #print("top/end")
         else:
@@ -33,19 +33,19 @@ def check_adj(data,linenum,num,index):
         #print("linenum=len(data)")
         if index == 0:
             adjcells = data[linenum-1][index:ei+2] + " " + data[linenum][ei+1]
-        elif ei == len(data[linenum]):
-            adjcells = data[linenum-1][index:ei] + " " + data[linenum][index-1]
+        elif ei == len(data[linenum]) - 1:
+            adjcells = data[linenum-1][index:ei+1] + " " + data[linenum][index-1]
         else:
             adjcells = data[linenum-1][index-1:ei+2] + " " + data[linenum][index-1] + " " + data[linenum][ei+1]
     elif ei+1 == len(data[linenum]):
         #right edge, check above/below/left side
         #print("index=len(data[linenum])")
         #print("here")
-        adjcells = data[linenum-1][index-1:ei] + " " + data[linenum+1][index-1:ei] + " " + data[linenum][index-1]
+        adjcells = data[linenum-1][index-1:ei+1] + " " + data[linenum+1][index-1:ei+1] + " " + data[linenum][index-1]
     elif index == 0:
         #left edge, check above/below/right side
         #print("index=0")
-        adjcells = data[linenum-1][index:ei+2] + " " + data[linenum+1][index:ei+1] + " " + data[linenum][ei+1]
+        adjcells = data[linenum-1][index:ei+2] + " " + data[linenum+1][index:ei+2] + " " + data[linenum][ei+1]
     else:
         print("something wrong")
 
@@ -82,17 +82,18 @@ def main():
             # ..65..
             # ......
 
-            #if a symbol adjacent somewhere, add to total
+            #setup the index/starting point for the find
             if flag:
+                #first time, no offset needed
                 index = data[linenum].find(num)
                 flag = False
+                oldnum = num
             else:
-                index = data[linenum].find(num,index + len(num) - 1)
+                index = data[linenum].find(num,index + len(oldnum))
+
+            #if a symbol adjacent somewhere, add to total
             if check_adj(data,linenum,num,index):
                 total += int(num)
-            #    print("good num: ",num)
-            #else:
-            #    print("bad num: ",num,linenum)
 
     print("Total:")
     print(total)
